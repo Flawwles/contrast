@@ -25,10 +25,11 @@ export default class Chip extends Component {
   // contrast.isAccessible('#fafafa', 'rgba(0,0,0,.75)') // => true
 
   render() {
-    let setOpacity = "1"
     //Make it easier to use props but also remove any spaces - Might be better to do this sooner?
     const propHex1 = this.props.color1
     const propHex2 = this.props.color2
+    const rowIndex = this.props.rowIndex
+    const columnIndex = this.props.columnIndex
     const hex1 = propHex1.split(' ').join('')
     const hex2 = propHex2.split(' ').join('')
 
@@ -37,24 +38,43 @@ export default class Chip extends Component {
         this.checkHex(hex1),
         this.checkHex(hex2)
       ) * 100) / 100
-    // Set opacity if test has failed and user has requested to hide failed tests
-   if(contrast.score(this.checkHex(hex1), this.checkHex(hex2)) === 'F' && this.props.hideFailed){
-      setOpacity = '0.1'
-    }
 
-    return (
-      <div style={{
-        background: hex1,
-        color: hex2,
-        padding: '0.2rem',
-        textAlign: 'center',
-        borderRadius: '3px',
-        opacity: setOpacity
-      }}>
-        {this.props.children}&nbsp;
-        {contrast.score(this.checkHex(hex1), this.checkHex(hex2))}&nbsp;
-        {this.props.hideRatio ? null : ratio}
-      </div>
-    )
+      const score = contrast.score(
+        this.checkHex(hex1),
+        this.checkHex(hex2)
+      )
+
+      const RenderChip = ({ columnIndex, rowIndex, style }) => (
+        <div
+        style={{
+          background: hex1,
+          color: hex2,
+          padding: '0.2rem',
+          textAlign: 'center',
+          borderRadius: '3px',
+          display: 'flex',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        className={`chip chip__${score} row-${rowIndex}`}>
+          {this.props.children}&nbsp;
+          {score}&nbsp;
+          {this.props.hideRatio ? null : ratio}
+        </div>
+    );
+
+
+      if (hex1 === hex2 ) {
+        return (
+          <div/>
+        )
+      } else {
+        return (
+          <RenderChip/>
+        )
+      }
+
+
   }
 }

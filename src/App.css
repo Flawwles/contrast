@@ -6,6 +6,11 @@
   --grey-300: hsla(0, 0%, 0%, 0.3);
   --font-main: Cousine,Monaco,Andale Mono,Ubuntu Mono,monospace;
   --font-header: Montserrat, sans-serif;
+
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -21,11 +26,22 @@ body {
   width: 100%;
   padding: 16px;
   margin-top: 15px;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
   font-family: var(--font-main);
   font-size: 1rem;
 }
 
+
+.chip__F {
+  opacity: 0.3;
+}
+
+.default-option {
+  margin-bottom: 3rem;
+}
+
+.controls {
+}
 //type
 
 
